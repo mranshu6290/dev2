@@ -6,19 +6,19 @@ pipeline {
             steps {
                 echo 'I am alive'
             }
-            stage('Alive') {
+            stage('Alive1') {
             steps {
                 echo 'I am alive'
             }
-                stage('Alive') {
+                stage('Alive2') {
             steps {
                 echo 'I am alive'
             }
-                    stage('Alive') {
+                    stage('Alive3') {
             steps {
                 echo 'I am alive'
             }
-                        stage('Alive') {
+                        stage('Alive4') {
             steps {
                 echo 'I am alive'
             }
