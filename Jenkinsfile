@@ -13,6 +13,7 @@ pipeline {
             steps {
                 sh "podman build -t ${IMAGE} ."
             }
+        }
 
             stage('Clean') {
                 steps {
@@ -34,4 +35,4 @@ pipeline {
             }
         }
     }
-}
+
