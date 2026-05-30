@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "podman build -t ${IMAGE}} ."
+                sh "podman build -t ${IMAGE} ."
             }
 
             stage('Clean') {
@@ -23,7 +23,7 @@ pipeline {
 
             stage('Run Pod') {
                 steps {
-                    sh "podman run --restart=always -d -p ${PORT}:80 --name ${NAME} ${IMAGE}}"
+                    sh "podman run --restart=always -d -p ${PORT}:80 --name ${NAME} ${IMAGE}"
                 }
             }
 
