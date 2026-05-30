@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'my-nginx-app1'
+        IMAGE_TAG  = "${BUILD_NUMBER}"
+    }
+
+    stages {
+
+        stage('Build') {
+            steps {
+                sh 'podman build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+            }
+        }
+
+        stage('Push') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_TOKEN" | podman login docker.io -u "$DOCKER_USER" --password-stdin
+
+                        podman tag ${IMAGE_NAME}:${IMAGE_TAG} \
+                          docker.io/${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+
+                        podman push \
+                          docker.io/${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to Kind') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        kubectl set image deployment/nginx-deployment \
+                          nginx=docker.io/${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+
+                        kubectl rollout status deployment/nginx-deployment
+                    '''
+                }
+            }
+        }
+    }
+}
