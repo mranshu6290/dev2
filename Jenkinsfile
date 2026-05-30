@@ -1,5 +1,3 @@
-#podman build -t my-nginx-app1 .
-
 pipeline {
     agent any
 
