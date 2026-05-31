@@ -1,25 +1,48 @@
 pipeline {
     agent any
+    environment {
+        IMAGE = 'docker.io/mranshu6290:latest'
+        D_NAME = 'my-app-1'
+        PORT = ''
+        SVC = 'app-service'
+    }
 
     stages {
-        stage('Cleanup') {
-            steps {
-                echo 'I am alive'
-            }
-        }
         stage('Build') {
             steps {
                 echo 'I am alive'
+                sh 'podman build image . -t devops0206'
             }
         }
+        stage('Cleanup') {
+            steps {
+                sh 'kubectl delete deployment $D_NAME || true'
+            }
+        }
+        stage('Run CLuster') {
+            steps {
+                sh 'kubectl create deployment $D_NAME --image=$IMAGE --replicas=3 '
+            }
+        }
+
+        stage('Networking') {
+            steps {
+                sh '''
+                sleep 5
+                kubectl expose deployment $D_NAME \
+  --type=NodePort \
+  --port=80 \
+  --name=$SVC
+  '''
+            }
+        }
+
         stage('Test') {
             steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Build2') {
-            steps {
-                echo 'I am alive'
+                sh '''
+                PORT = $(kubectl get svc $SVC -jsonpath='{.spec.ports[0].nodePort}')
+                curl -f localhost:$PORT
+                '''
             }
         }
     }
