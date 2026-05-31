@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'I am alive'
+                echo 'I am alive2'
                 sh 'podman build . -t devops0206'
             }
         }
