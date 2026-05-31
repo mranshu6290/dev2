@@ -29,6 +29,7 @@ pipeline {
             steps {
                 sh '''
                 sleep 5
+                kubectl delete svc $SVC || true
                 kubectl expose deployment $D_NAME \
   --type=NodePort \
   --port=80 \
