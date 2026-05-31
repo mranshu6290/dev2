@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'I am alive'
-                sh 'podman build image . -t devops0206'
+                sh 'podman build . -t devops0206'
             }
         }
         stage('Cleanup') {
