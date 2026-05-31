@@ -2,12 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Alive') {
+        stage('Cleanup') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Alive2') {
+        stage('Build') {
+            steps {
+                echo 'I am alive'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'I am alive'
+            }
+        }
+        stage('Build2') {
             steps {
                 echo 'I am alive'
             }
