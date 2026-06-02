@@ -9,7 +9,7 @@ environment{
         stage('cleanup') {
             steps {
                 sh 'podman delete deployment $NAME || true'
-                sh 'podman delete pod $NAME || true'
+                sh 'podman delete container $NAME || true'
 
             }
         }
