@@ -1,38 +1,22 @@
 pipeline {
     agent any
 
+environment{
+    IMAGE='img0306'
+    NAME='0306'
+}
     stages {
-        stage('Alive') {
+        stage('cleanup') {
             steps {
-                echo 'I am alive'
+                sh 'podman delete deployment $NAME || true'
             }
         }
-        stage('Alive1') {
+        stage('build') {
             steps {
-                echo 'I am alive'
+                sh 'podman build . -t $NAME'
             }
         }
-        stage('Alive2') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive3') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive4') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive5') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive6') {
+        stage('create') {
             steps {
                 echo 'I am alive'
             }
