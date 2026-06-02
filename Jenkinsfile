@@ -13,7 +13,7 @@ environment{
         }
         stage('build') {
             steps {
-                sh 'podman build . -t $NAME'
+                sh 'podman build . -t $IMAGE'
             }
         }
         stage('run Pod only') {
