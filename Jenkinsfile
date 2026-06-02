@@ -16,9 +16,9 @@ environment{
                 sh 'podman build . -t $NAME'
             }
         }
-        stage('create') {
+        stage('run Pod only') {
             steps {
-                echo 'I am alive'
+                sh 'podman run -d --name anshu -p 8085:80 -i localhost/$IMAGE'
             }
         }
     }
