@@ -8,8 +8,8 @@ environment{
     stages {
         stage('cleanup') {
             steps {
-                sh 'podman delete deployment $NAME || true'
-                sh 'podman delete container $NAME || true'
+                sh 'podman rm deployment $NAME || true'
+                sh 'podman rm container $NAME || true'
 
             }
         }
