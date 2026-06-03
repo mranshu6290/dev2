@@ -20,7 +20,7 @@ environment{
         }
         stage('run Pod only') {
             steps {
-                sh 'podman run -d --name $NAME -p 8085:80 -i $IMAGE'
+                sh 'podman run -d --name $NAME -i $IMAGE -p 8085:80'
             }
         }
     }
