@@ -9,9 +9,7 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                sh 'podman rm deployment $NAME || true'
-
-                sh 'podman rm container $NAME || true'
+                sh 'podman rm $NAME || true'
             }
         }
         stage('Build') {
