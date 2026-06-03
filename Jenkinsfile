@@ -3,7 +3,7 @@ pipeline {
 
     environment {
     NAME='0406'
-    IMAGE='docker.io/nginx'
+    IMAGE='docker.io/mranshu6290/0406img'
     PORT='8085'
     }
     stages {
