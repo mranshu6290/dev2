@@ -1,40 +1,32 @@
 pipeline {
     agent any
 
+    environment {
+    NAME='0406'
+    IMAGE='0406img'
+    PORT='8085'
+    }
     stages {
-        stage('Alive') {
+        stage('Clean') {
             steps {
-                echo 'I am alive'
+                sh 'podman rm deployment $NAME || true'
+
+                sh 'podman rm container $NAME || true'
             }
         }
-        stage('Alive1') {
+        stage('Build') {
             steps {
-                echo 'I am alive'
+                sh 'podman build . -t $IMAGE'
             }
         }
-        stage('Alive2') {
+        stage('Run Pod') {
             steps {
-                echo 'I am alive'
+                sh 'podman run -d -it $IMAGE -p $PORT:80 --name $NAME'
             }
         }
-        stage('Alive3') {
+        stage('Run Deployment') {
             steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive4') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive5') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive6') {
-            steps {
-                echo 'I am alive'
+                sh 'I am alive'
             }
         }
     }
