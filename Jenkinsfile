@@ -4,7 +4,7 @@ pipeline {
     environment {
     NAME='0406'
     IMAGE='docker.io/mranshu6290/0406img'
-    PORT='8085'
+    PORT='32080'
     }
     stages {
         stage('Clean') {
@@ -24,12 +24,14 @@ pipeline {
             steps {
                 sh '''
                 kubectl create deployment $NAME --image=$IMAGE --replicas=3
+                sleep 3
+                kubectl expose deployment $NAME --type=NodePort --port=80 --node-port=$PORT
                 '''
             }
         }
-        stage('Run Deployment') {
+        stage('Test Deployment') {
             steps {
-                echo 'I am alive'
+                sh 'curl -f localhost:$PORT'
             }
         }
     }
