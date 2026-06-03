@@ -4,6 +4,7 @@ pipeline {
 environment{
     IMAGE='img0306'
     NAME='0306'
+    PORT='8082'
 }
     stages {
         stage('cleanup') {
@@ -20,7 +21,7 @@ environment{
         }
         stage('run Pod only') {
             steps {
-                sh 'podman run -d --name $NAME -i $IMAGE -p 8085:80'
+                sh 'ppodman run -d --name $NAME -p $PORT:80 -i $IMAGE'
             }
         }
     }
