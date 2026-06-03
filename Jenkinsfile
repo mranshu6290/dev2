@@ -3,15 +3,14 @@ pipeline {
 
     environment {
     NAME='0406'
-    IMAGE='0406img'
-    PORT='8088'
+    IMAGE='docker.io/nginx'
+    PORT='8085'
     }
     stages {
         stage('Clean') {
             steps {
                 sh '''
-                podman rm -f $NAME || true
-                sleep 2'''
+                kubectl delete deployment $NAME || true'''
             }
         }
         stage('Build') {
@@ -24,7 +23,7 @@ pipeline {
         stage('Run Pod') {
             steps {
                 sh '''
-                podman run -d --name $NAME -p $PORT:80 $IMAGE
+                kubectl create deployment $NAME --image=$IMAGE --replicas=3
                 '''
             }
         }
