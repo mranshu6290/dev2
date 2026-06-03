@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Run Deployment') {
             steps {
-                sh 'I am alive'
+                echo 'I am alive'
             }
         }
     }
