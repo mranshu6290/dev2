@@ -4,7 +4,7 @@ pipeline {
     environment {
     NAME='n0406'
     IMAGE='docker.io/mranshu6290/0406img'
-    PORT=''
+    SVC='conn'
     }
     stages {
         stage('Clean') {
@@ -25,7 +25,7 @@ pipeline {
                 sh '''
                 kubectl create deployment $NAME --image=$IMAGE --replicas=3
                 sleep 3
-                kubectl expose deployment $NAME --type=NodePort --port=80
+                kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
                 '''
             }
         }
