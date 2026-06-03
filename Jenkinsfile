@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Run Pod') {
             steps {
-                sh 'podman run -d -it $IMAGE -p $PORT:80 --name $NAME'
+                sh 'podman run -d -it --name $NAME -p $PORT:80 $IMAGE'
             }
         }
         stage('Run Deployment') {
