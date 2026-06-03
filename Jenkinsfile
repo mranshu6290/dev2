@@ -25,7 +25,7 @@ pipeline {
                 sh '''
                 kubectl create deployment $NAME --image=$IMAGE --replicas=3
                 sleep 3
-                kubectl expose deployment $NAME --type=NodePort --port=80 --node-port=$PORT
+                kubectl expose deployment $NAME --type=NodePort --port=80
                 '''
             }
         }
