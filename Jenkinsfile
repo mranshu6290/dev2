@@ -4,7 +4,7 @@ pipeline {
     environment {
     NAME='n0406'
     IMAGE='docker.io/mranshu6290/0406img'
-    PORT='32080'
+    PORT=''
     }
     stages {
         stage('Clean') {
@@ -31,7 +31,10 @@ pipeline {
         }
         stage('Test Deployment') {
             steps {
-                sh 'curl -f localhost:$PORT'
+                sh '''
+                PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
+                curl -f localhost:$PORT
+                '''
             }
         }
     }
