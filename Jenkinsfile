@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-    NAME='0406'
+    NAME='n0406'
     IMAGE='docker.io/mranshu6290/0406img'
     PORT='32080'
     }
