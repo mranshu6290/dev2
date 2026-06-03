@@ -4,7 +4,7 @@ pipeline {
     environment {
     NAME='0406'
     IMAGE='0406img'
-    PORT='8086'
+    PORT='8088'
     }
     stages {
         stage('Clean') {
