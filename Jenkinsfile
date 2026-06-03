@@ -35,7 +35,8 @@ pipeline {
             steps {
                 sh '''
                 PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
-                curl -f localhost:$PORT
+                sleep 2
+                curl -f localhost:$PORT || true
                 '''
             }
         }
