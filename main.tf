@@ -3,15 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "my_bucket-i" {
-  bucket = "my-unique-bucket-name-${random_string.bucket_suffix.result}"
+  bucket = "my-unique-bucket-name"
 }
 
-resource "random_string" "bucket_suffix" {
-  length  = 8
-  special = false
-  lower   = true
-}
+
 
 output "bucket_name" {
-  value = aws_s3_bucket.my_bucket.id
+  value = aws_s3_bucket.my_bucket-i.id
 }
