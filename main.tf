@@ -1,6 +1,18 @@
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state-bucket-xyz"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+  //  dynamodb_table = "terraform-locks"
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
 }
+
+
 
 resource "aws_s3_bucket" "my_bucket-i" {
   bucket = "my-unique-bucket-name-6290"
