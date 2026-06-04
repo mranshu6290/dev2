@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Terraform Init') {
             steps {
-                sh 'terraform init -input=false -migrate-state -auto-approve'
+                sh 'terraform init -input=false -migrate-state -force-copy'
             }
         }
 
