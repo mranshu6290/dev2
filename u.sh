@@ -3,6 +3,6 @@
 echo "***MAGIC START****"
 git add .
 git commit -m "Update"
-git push
+git push o 0506
 echo "***MAGIC START****"
 
