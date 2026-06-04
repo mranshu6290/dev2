@@ -14,8 +14,8 @@ provider "aws" {
 
 
 
-resource "aws_s3_bucket" "my_bucket-j" {
-  bucket = "my-unique-bucket-name-62902"
+resource "aws_s3_bucket" "my_bucket-k" {
+  bucket = "my-unique-bucket-name-62903"
 }
 
 
