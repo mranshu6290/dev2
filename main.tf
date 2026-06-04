@@ -14,12 +14,12 @@ provider "aws" {
 
 
 
-resource "aws_s3_bucket" "my_bucket-i" {
+resource "aws_s3_bucket" "my_bucket-j" {
   bucket = "my-unique-bucket-name-62901"
 }
 
 
 
 output "bucket_name" {
-  value = aws_s3_bucket.my_bucket-i.id
+  value = aws_s3_bucket.my_bucket-j.id
 }
