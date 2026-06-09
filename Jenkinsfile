@@ -15,13 +15,13 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'podman build . -t test'
+                sh 'podman build . -t $NAME'
             }
         }
 
-        stage('Testing Image') {
+        stage('$NAMEing Image') {
             steps {
-                sh 'podman images | grep test'
+                sh 'podman images | grep $NAME'
             }
         }
         stage('Pull Image') {
@@ -34,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('Test Deployment') {
+        stage('$NAME Deployment') {
             steps {
                 sh '''
                 PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
