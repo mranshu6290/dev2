@@ -12,7 +12,7 @@ pipeline {
          stage('Init') {
             steps {
                 script {
-                    env.GIT_HASH = sh(
+                    ${env.GIT_HASH} = sh(
                         script: "git rev-parse --short HEAD",
                         returnStdout: true
                     ).trim()
