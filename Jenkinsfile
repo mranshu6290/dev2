@@ -17,9 +17,9 @@ pipeline {
             }
         }
 
-        stage('Test2') {
+        stage('Testing Image') {
             steps {
-                echo 'Testing'
+                sh 'podman images || grep -i $IMAGE'
             }
         }
     }
