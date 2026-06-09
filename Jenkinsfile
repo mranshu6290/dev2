@@ -1,16 +1,25 @@
 pipeline {
     agent any
+    environment {
+        $NAME = '1006'
+        $IMAGE = '1006img'
+    }
 
     stages {
-        stage('Test1') {
+        stage('Cleanup') {
             steps {
-                echo 'Test1'
+                sh 'podman rm -f deplopyment $NAME || true'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'podman build -t $IMAGE'
             }
         }
 
         stage('Test2') {
             steps {
-                echo 'Test2'
+                echo 'Testing'
             }
         }
     }
