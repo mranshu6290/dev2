@@ -7,7 +7,6 @@ pipeline {
     }
 
     stages {
-
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
@@ -53,11 +52,27 @@ pipeline {
 
         stage('$NAME Deployment') {
             steps {
-                sh '''
-                PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
-                sleep 2
-                curl -f localhost:$PORT || true
-                '''
+                script {
+                    def status = sh(
+                script: '''
+                    PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
+                    sleep 2
+                    curl -f localhost:$PORT
+                ''',
+                returnStatus: true
+            )
+
+                    if (status != 0) {
+                        echo '❌ Health check failed — triggering rollback'
+
+                        sh "kubectl rollout history deployment $NAME"
+                        sh "kubectl rollout undo deployment $NAME"
+
+                        error('Rollback executed due to failed deployment')
+            } else {
+                        echo '✅ Deployment healthy'
+                    }
+                }
             }
         }
     }
