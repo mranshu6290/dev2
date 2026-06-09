@@ -19,7 +19,7 @@ pipeline {
 
         stage('Testing Image') {
             steps {
-                sh 'podman images || grep -i $IMAGE'
+                sh 'podman images || grep $IMAGE'
             }
         }
     }
