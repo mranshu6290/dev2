@@ -4,21 +4,12 @@ pipeline {
         NAME = '1006'
         IMAGE = '1006img'
         SVC = 'conn'
-        GIT_HASH = ''
+        BUILD_NUMBER = ''
     }
 
     stages {
 
-         stage('Init') {
-            steps {
-                script {
-                    ${env.GIT_HASH} = sh(
-                        script: "git rev-parse --short HEAD",
-                        returnStdout: true
-                    ).trim()
-                }
-            }
-        }
+        
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
@@ -27,7 +18,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "podman build . -t docker.io/mranshu6290/$NAME:$GIT_HASH"
+                sh "podman build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER"
             }
         }
 
@@ -46,7 +37,7 @@ pipeline {
 
               echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
 
-              podman push docker.io/mranshu6290/$NAME:$GIT_HASH
+              podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
             '''
                                          }
             }
@@ -55,7 +46,7 @@ pipeline {
         stage('Pull Image') {
             steps {
                 sh '''
-                  kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$GIT_HASH --replicas=3
+                  kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3
                 sleep 3
                 kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
                 '''
