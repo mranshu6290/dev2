@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'podman build . -t $IMAGE'
+              //  sh 'podman build . -t $IMAGE'
             }
         }
 
