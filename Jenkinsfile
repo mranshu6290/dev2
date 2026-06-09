@@ -57,7 +57,7 @@ stage('Deploy (FIXED - Rolling Update)') {
                     --port=80 \
                     --name=$SVC || true
 
-                    sleep 5
+                    sleep 3
                 """
             }
         }
