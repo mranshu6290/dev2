@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh ' podman build . -t docker.io/mranshu6290/$NAME:$GIT_HASH'
+                sh "podman build . -t docker.io/mranshu6290/$NAME:$GIT_HASH"
             }
         }
 
