@@ -4,12 +4,10 @@ pipeline {
         NAME = '1006'
         IMAGE = '1006img'
         SVC = 'conn'
-        BUILD_NUMBER = ''
     }
 
     stages {
 
-        
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
