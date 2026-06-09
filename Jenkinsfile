@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Cleanup') {
             steps {
-                sh 'kubectl delete deployment $NAME || true'
                 sh 'kubectl delete service $SVC || true'
             }
         }
@@ -49,7 +48,28 @@ pipeline {
                 '''
             }
         }
+stage('Deploy (FIXED - Rolling Update)') {
+            steps {
+                sh """
+                    # 🟢 Try rolling update first (THIS ENABLES ROLLBACK)
+                    kubectl set image deployment/$NAME \
+                    $NAME=docker.io/mranshu6290/$NAME:$BUILD_NUMBER || true
 
+                    # 🟢 If first deploy (no deployment exists)
+                    kubectl create deployment $NAME \
+                    --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER \
+                    --replicas=3 || true
+
+                    # 🟢 Expose service only once
+                    kubectl expose deployment $NAME \
+                    --type=NodePort \
+                    --port=80 \
+                    --name=$SVC || true
+
+                    sleep 5
+                """
+            }
+        }
         stage('$NAME Deployment') {
             steps {
                 script {
