@@ -10,6 +10,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 sh 'podman rm -f deplopyment $NAME || true'
+                sh 'podman rm -f service $SVC || true'
             }
         }
         stage('Build') {
