@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        $NAME = '1006'
-        $IMAGE = '1006img'
+        NAME = '1006'
+        IMAGE = '1006img'
     }
 
     stages {
