@@ -9,8 +9,8 @@ pipeline {
     stages {
         stage('Cleanup') {
             steps {
-                sh 'podman rm -f deployment $NAME || true'
-                sh 'podman rm -f service $SVC || true'
+                sh 'kubectl rm -f deployment $NAME || true'
+                sh 'kubectl rm -f service $SVC || true'
             }
         }
         stage('Build') {
