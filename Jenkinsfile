@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'podman build . -t $NAME'
+                sh ' podman build . -t docker.io/mranshu6290/$NAME:latest'
             }
         }
 
@@ -24,6 +24,24 @@ pipeline {
                 sh 'podman images | grep $NAME'
             }
         }
+
+stage('Build & Push') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) {
+            sh '''
+             
+              echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+
+              podman push docker.io/mranshu6290/$NAME:latest
+            '''
+        }
+    }
+}
+
+
+
         stage('Pull Image') {
             steps {
                 sh '''
