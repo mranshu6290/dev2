@@ -39,15 +39,6 @@ pipeline {
             }
         }
 
-        stage('Pull Image') {
-            steps {
-                sh '''
-                  kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3
-                sleep 3
-                kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
-                '''
-            }
-        }
 stage('Deploy (FIXED - Rolling Update)') {
             steps {
                 sh """
