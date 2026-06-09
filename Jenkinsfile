@@ -10,7 +10,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
-                sh 'kubectl delete service $SVC'
+                sh 'kubectl delete service $SVC || true'
             }
         }
         stage('Build') {
