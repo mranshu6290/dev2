@@ -27,7 +27,7 @@ pipeline {
         stage('Pull Image') {
             steps {
                 sh '''
-                  kubectl create deployment $NAME --image=docker.io/mranshu6290/$IMAGE --replicas=3
+                  kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME --replicas=3
                 sleep 3
                 kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
                 '''
