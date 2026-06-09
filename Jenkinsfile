@@ -3,14 +3,14 @@ pipeline {
     environment {
         NAME = '1006'
         IMAGE = '1006img'
-        SVC='conn'
+        SVC = 'conn'
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
-                sh 'kubectl delete -f service $SVC || true'
+                sh 'kubectl delete service $SVC'
             }
         }
         stage('Build') {
@@ -27,7 +27,7 @@ pipeline {
         stage('Pull Image') {
             steps {
                 sh '''
-                  kubectl create deployment $NAME --image=$IMAGE --replicas=3
+                  kubectl create deployment $NAME --image=docker.io/mranshu6290/$IMAGE --replicas=3
                 sleep 3
                 kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
                 '''
