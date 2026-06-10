@@ -3,14 +3,14 @@ pipeline {
     environment {
         NAME = '1106'
         // IMAGE = '1106img'
-        SVC = ''
+        SVC = 'conn'
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
-                sh 'kubectl delete service $NAME || true'
+                sh 'kubectl delete service $SVC || true'
             }
         }
         stage('Build') {
