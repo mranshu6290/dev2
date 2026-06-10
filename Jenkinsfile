@@ -16,14 +16,23 @@ pipeline {
                 sh 'podman build . -t $NAME:${BUILD_NUMBER}'
             }
         }
-        stage('Upload') {
+        stage('Build & Push') {
             steps {
-                echo 'I am alive'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+
+              echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+
+              podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
+            '''
+                                         }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'I am alive'
+                sh 'kubectl create deployment $NAME --image=dockerhub.io/mranshu6290:$NAME:$BUILD_NUMBER --replicas=3 || true'
             }
         }
         stage('Test') {
