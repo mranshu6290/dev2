@@ -2,13 +2,14 @@ pipeline {
     agent any
     environment {
         NAME = '1106'
-       // IMAGE = '1106img'
+    // IMAGE = '1106img'
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
+                sh 'kubectl delete service $NAME || true'
             }
         }
         stage('Build') {
@@ -32,12 +33,23 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3 || true'
+                sh '''
+                kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3 || true
+
+             kubectl expose deployment $NAME \
+                    --type=NodePort \
+                    --port=80 \
+                    --name=$NAME || true
+                '''
             }
         }
         stage('Test') {
             steps {
-                echo 'I am alive'
+                sh '''
+                PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
+                    sleep 2
+                    curl -f localhost:$PORT
+                '''
             }
         }
     }
