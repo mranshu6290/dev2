@@ -2,7 +2,8 @@ pipeline {
     agent any
     environment {
         NAME = '1106'
-    // IMAGE = '1106img'
+        // IMAGE = '1106img'
+        SVC = ''
     }
 
     stages {
@@ -39,14 +40,14 @@ pipeline {
              kubectl expose deployment $NAME \
                     --type=NodePort \
                     --port=80 \
-                    --name=$NAME || true
+                    --name=$SVC || true
                 '''
             }
         }
         stage('Test') {
             steps {
                 sh '''
-                PORT=$(kubectl get svc $NAME -o jsonpath="{.spec.ports[0].nodePort}")
+                PORT=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
                     sleep 2
                     curl -f localhost:$PORT
                 '''
