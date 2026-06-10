@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Cleanup') {
             steps {
-                sh 'kubectl remove deployment $NAME || true'
+                sh 'kubectl delete deployment $NAME || true'
             }
         }
         stage('Build') {
