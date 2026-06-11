@@ -2,37 +2,17 @@ pipeline {
     agent any
 
     stages {
-        stage('Alive') {
+        stage('Cleanup') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Alive1') {
+        stage('Build') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Alive2') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive3') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive4') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive5') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive6') {
+        stage('Save to dockerhub') {
             steps {
                 echo 'I am alive'
             }
