@@ -18,7 +18,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'podman -build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER'
+
+                sh 'podman build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER'
             }
         }
         stage('Save to dockerhub') {
@@ -64,4 +65,3 @@ pipeline {
         }
     }
 }
-
