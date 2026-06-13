@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NAME = '1206'
+        NAME = '1406'
         SVC = 'conn'
     }
     stages {
@@ -14,5 +14,29 @@ pipeline {
 
                 '''
             }
+            stage('Cleanup') {
+            steps {
+                sh '''
+                kubectl delete deployment $NAME || true
+                kubectl delete service $SVC || true
+
+                '''
+            }
+            stage('build') {
+            steps {
+                sh '''
+                podman build . -t docker.io/mranshu6290/$NAME
+
+                '''
+            }
         }
+stage('checkup') {
+            steps {
+                sh '''
+                podman images | grep $NAME
+
+                '''
+            }
+        }
+
 }}
