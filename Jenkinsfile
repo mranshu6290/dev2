@@ -47,5 +47,20 @@ pipeline {
                                          }
             }
         }
+        stage('Deployment') {
+            steps {
+                sh '''
+                kubectl create $NAME -image=ocker.io/mranshu6290/$NAME:$BUILD_NUMBER -replicas=3
+
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                sh '''
+
+                '''
+            }
+        }
     }
 }
