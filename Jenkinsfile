@@ -32,7 +32,7 @@ pipeline {
             }
         }
 
-  stage('checkup') {
+        stage('Upload') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                          usernameVariable: 'DOCKER_USER',
@@ -44,10 +44,8 @@ pipeline {
               podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
 
                 '''
-
                                          }
             }
-
-  }
+        }
     }
 }
