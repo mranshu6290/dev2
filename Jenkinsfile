@@ -6,11 +6,13 @@ pipeline {
         SVC = 'conn'
     }
 
-    stages {
-        stage('Hello1')
-        {
-            steps:
-            echo 'I am hgello'
+    stage('Cleanup') {
+            steps {
+                sh '''
+                kubectl delete deployment $NAME || true
+                kubectl delete service $SVC || true
+
+                '''
+            }
         }
-    }
 }
