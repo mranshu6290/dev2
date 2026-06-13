@@ -5,8 +5,8 @@ pipeline {
         NAME = '1206'
         SVC = 'conn'
     }
-
-    stage('Cleanup') {
+    stages {
+        stage('Cleanup') {
             steps {
                 sh '''
                 kubectl delete deployment $NAME || true
@@ -15,4 +15,4 @@ pipeline {
                 '''
             }
         }
-}
+}}
