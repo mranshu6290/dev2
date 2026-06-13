@@ -5,38 +5,30 @@ pipeline {
         NAME = '1406'
         SVC = 'conn'
     }
+
     stages {
         stage('Cleanup') {
             steps {
                 sh '''
                 kubectl delete deployment $NAME || true
                 kubectl delete service $SVC || true
-
                 '''
             }
-            stage('Cleanup') {
-            steps {
-                sh '''
-                kubectl delete deployment $NAME || true
-                kubectl delete service $SVC || true
+        }
 
-                '''
-            }
-            stage('build') {
+        stage('build') {
             steps {
                 sh '''
                 podman build . -t docker.io/mranshu6290/$NAME
-
                 '''
             }
         }
-stage('checkup') {
+        stage('checkup') {
             steps {
                 sh '''
                 podman images | grep $NAME
-
                 '''
             }
         }
-
-}}
+    }
+}
