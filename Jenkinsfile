@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh '''
                 podman images | grep $NAME
-                
+
                 '''
             }
         }
@@ -45,23 +45,9 @@ pipeline {
 
                 '''
 
-               
+                                         }
             }
-        }
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
     }
 }
