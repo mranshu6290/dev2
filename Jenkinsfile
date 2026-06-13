@@ -19,7 +19,7 @@ pipeline {
         stage('build') {
             steps {
                 sh '''
-                podman build . -t docker.io/mranshu6290/$NAME:{BUILD_NUMBER}
+                podman build . -t docker.io/mranshu6290/$NAME:${BUILD_NUMBER}
                 '''
             }
         }
