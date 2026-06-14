@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'podman build . -t dockerhub.io/mranshu6290/$NAME:$BUILD_NUMBER'
+                sh 'podman build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER'
             }
         }
         stage('Docker Image check') {
