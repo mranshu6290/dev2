@@ -52,7 +52,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-Port=$(kubectl get svc -o jsonpath="{spec.ports[0].nodePort}")
+Port=$(kubectl get svc -o jsonpath="{.spec.ports[0].nodePort}")
                 curl -f localhost:$Port
 
                 '''
