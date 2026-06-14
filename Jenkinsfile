@@ -10,6 +10,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 sh 'kubectl delete deployment $NAME || true'
+                sh 'kubectl delete svc $SVC || true'
             }
         }
         stage('Build') {
@@ -39,14 +40,22 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'kubectl create deployment $NAME \
-                --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3'
+                sh '''kubectl create deployment $NAME \
+                --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3
+                kubectl expose deployment $NAME --port=80 --type=NodePort --name=$SVC
+                sleep 5
+
+'''
             }
         }
 
-         stage('Test') {
+        stage('Test') {
             steps {
-                sh 'kubectl get deployments $NAME -o wide || true'
+                sh '''
+Port=$(kubectl get svc -o jsonpath="{spec.ports[0].nodePort}")
+                curl -f localhost:$Port
+
+                '''
             }
         }
         stage('AWS Infra') {
