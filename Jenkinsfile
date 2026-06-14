@@ -2,24 +2,31 @@ pipeline {
     agent any
 
     environment {
-        NAME = '1206'
+        NAME = '1506'
         SVC = 'conn'
     }
 
     stages {
         stage('Cleanup') {
             steps {
-                echo 'I am cleanup o 1506'
+                sh 'kubectl delete deployment $NAME || true'
             }
         }
         stage('Build') {
             steps {
-                echo 'I am cleanup o 1506'
+                sh 'podman build . -t dockerhub.io/mranshu6290/$NAME:$BUILD_NUMBER'
+            }
+        }
+        stage('Docker Image check') {
+            steps {
+                sh 'podman images | grep $NAME'
             }
         }
         stage('Docker Upload') {
             steps {
-                echo 'I am cleanup o 1506'
+                sh '''
+              podman dockerhub login -username -password
+                                '''
             }
         }
         stage('Test') {
