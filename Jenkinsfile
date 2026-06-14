@@ -24,14 +24,29 @@ pipeline {
         }
         stage('Docker Upload') {
             steps {
-                sh '''
-              podman dockerhub login -username -password
-                                '''
+                withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+
+              echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+
+              podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
+
+                '''
+                                         }
             }
         }
-        stage('Test') {
+        stage('Deploy') {
             steps {
-                echo 'I am cleanup o 1506'
+                sh 'kubectl create deployment $NAME \
+                --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3'
+            }
+        }
+
+         stage('Test') {
+            steps {
+                sh 'kubectl get deployments $NAME -o wide || true'
             }
         }
         stage('AWS Infra') {
