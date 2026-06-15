@@ -9,8 +9,8 @@ pipeline {
         stage('Cleanup') {
             steps {
                 sh '''
-                kubectl remove deployment $NAME || true
-                kubectl remove svc $NAME || true
+                kubectl delete deployment $NAME || true
+                kubectl delete svc $NAME || true
                 '''
             }
         }
