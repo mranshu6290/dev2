@@ -21,22 +21,35 @@ pipeline {
         }
         stage('Check') {
             steps {
-                sh 'podman images | grep $NAME:$BUILD_NUMBER'
+                sh 'podman images | grep $NAME'
             }
         }
         stage('Upload') {
             steps {
-                echo 'I am alive'
+                  withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+
+              echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+
+              podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
+
+                '''
             }
         }
         stage('Deploy') {
             steps {
-                echo 'I am alive'
+                sh 'kubectl create deployment --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --name=$NAME --replicas=3'
             }
         }
         stage('Test') {
             steps {
-                echo 'I am alive'
+                sh '''
+                kubectl expose deployment $NAME --NAME=SVC --type=NodePort --port=80
+                sleep 5
+                kubectl get svc $SVC
+                '''
             }
         }
             stage('Infra') {
