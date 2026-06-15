@@ -47,7 +47,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                kubectl expose deployment $NAME --NAME=SVC --type=NodePort --port=80
+                kubectl expose deployment $NAME --name=$SVC --type=NodePort --port=80
                 sleep 5
                 kubectl get svc $SVC
                 '''
