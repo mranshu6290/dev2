@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'kubectl create deployment --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --name=$NAME --replicas=3'
+                sh 'kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replicas=3'
             }
         }
         stage('Test') {
