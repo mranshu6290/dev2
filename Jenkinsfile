@@ -49,7 +49,8 @@ pipeline {
                 sh '''
                 kubectl expose deployment $NAME --name=$SVC --type=NodePort --port=80
                 sleep 5
-                kubectl get svc $SVC
+                Port=$(kubectl get svc $SVC jsonpath="{.spec.ports[0].nodePort}")
+                curl -f localhost:$Port
                 '''
             }
         }
