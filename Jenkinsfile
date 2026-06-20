@@ -41,6 +41,15 @@ kubectl delete svc $SVC || true
             }
         }
 
+
+  stage('Create Deployment') {
+                steps {
+                    sh '''
+                    kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NAME
+                                       '''
+                }
+        }
+
         stage('Expose') {
                 steps {
                     sh '''
