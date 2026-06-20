@@ -56,7 +56,7 @@ kubectl delete svc $SVC || true
                     kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
                     sleep 2
 Port=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
-curl -f localhost:Port || true
+curl -f localhost:$Port || true
                     '''
                 }
         }
