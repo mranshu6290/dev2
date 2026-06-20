@@ -1,1 +1,42 @@
-AXD
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+        "creationTimestamp": "2026-06-20T02:57:28Z",
+        "labels": {
+            "app": "2106"
+        },
+        "name": "conn4",
+        "namespace": "default",
+        "resourceVersion": "206226",
+        "uid": "cda1ff01-6249-4d94-9fd6-42422b4043f0"
+    },
+    "spec": {
+        "clusterIP": "10.43.190.255",
+        "clusterIPs": [
+            "10.43.190.255"
+        ],
+        "externalTrafficPolicy": "Cluster",
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+            "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+            {
+                "nodePort": 31213,
+                "port": 80,
+                "protocol": "TCP",
+                "targetPort": 80
+            }
+        ],
+        "selector": {
+            "app": "2106"
+        },
+        "sessionAffinity": "None",
+        "type": "NodePort"
+    },
+    "status": {
+        "loadBalancer": {}
+    }
+}
