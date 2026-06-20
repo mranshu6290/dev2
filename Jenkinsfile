@@ -18,7 +18,7 @@ kubectl delete svc $SVC || true
                 steps {
                     sh ''' podman build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER'''
                 }
-            }
+        }
 
             stage('CHeck') {
                 steps {
@@ -41,8 +41,15 @@ kubectl delete svc $SVC || true
             }
         }
 
-            
-            
+        stage('Expose') {
+                steps {
+                    sh '''
+                    kubectl expose deployment $NAME --type=NodePort --port=80 --name=$SVC
+                    sleep 2
+kubectl get svc $NAME -o wide
+                    '''
+                }
+        }
             stage('AWS Deployment') {
                 steps {
                     echo 'AWS Deployment1'
