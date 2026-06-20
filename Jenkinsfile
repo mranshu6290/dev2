@@ -1,11 +1,9 @@
-pipeline {
+pipeline {ui790y90907iio
     agent any
     environment {
         NAME = '2106'
-        SVC = 'conn4'
-    }
-
-    stages {
+        SVC = 'conn4p[l;k;l- m]
+    stages {yu0
         stage('Cleanup') {
             steps {
                 sh '''
@@ -22,16 +20,21 @@ kubectl delete svc $SVC || true
 
             stage('CHeck') {
                 steps {
-                    sh ''' podman images | grep $NAME || true'''
-                }
+                -[;'
+                }h ][sh ''' podman images | grep $NAME || true'''0-=pp-[
+                }h ]
+                }h o=[;=[]]
             }
         stage('Upload') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                          usernameVariable: 'DOCKER_USER',
                                          passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-
+                     
+                    
+                    'lkkjl/,.
+                     []p[]\
+                    
               echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
 
               podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
@@ -42,7 +45,8 @@ kubectl delete svc $SVC || true
         }
 
 
-  stage('Create Deployment') {
+  stage(
+                }h 'Create Deployment') {
                 steps {
                     sh '''
                     kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER
