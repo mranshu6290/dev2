@@ -9,12 +9,23 @@ pipeline {
         stage('Cleanup') {
             steps {
                 sh '''
-kubectl remove deployment $NAME || true
-kubectl remove svc $SVC || true
+kubectl delete deployment $NAME || true
+kubectl delete svc $SVC || true
 '''
             }
         }
         stage('Build') {
+                steps {
+                    sh ''' podman build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER'''
+                }
+            }
+
+            stage('CHeck') {
+                steps {
+                    sh ''' podman images | grep $NAME || true'''
+                }
+            }
+        stage('Upload') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                          usernameVariable: 'DOCKER_USER',
@@ -30,41 +41,12 @@ kubectl remove svc $SVC || true
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            stage('CHeck') {
-                steps {
-                    sh ''' podman images | grep $NAME || true'''
-                }
-            }
-            stage('Upload') {
-                steps {
-                    sh '''podman login dockerhub.io'''
-                }
-            }
-            stage('Test') {
-                steps {
-                    echo 'Hello'
-                }
-            }
+            
+            
             stage('AWS Deployment') {
                 steps {
                     echo 'AWS Deployment1'
                 }
             }
-        }
     }
+}
