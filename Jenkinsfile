@@ -26,28 +26,28 @@ kubectl remove svc $SVC || true
               podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
 
                 '''
+                                         }
             }
-        }
-        stage('CHeck') {
-            steps {
-                sh ''' podman images | grep $NAME || true'''
+            stage('CHeck') {
+                steps {
+                    sh ''' podman images | grep $NAME || true'''
+                }
             }
-        }
-        stage('Upload') {
-            steps {
-                sh '''podman login dockerhub.io'''
+            stage('Upload') {
+                steps {
+                    sh '''podman login dockerhub.io'''
+                }
             }
-        }
-        stage('Test') {
-            steps {
-                echo 'Hello'
+            stage('Test') {
+                steps {
+                    echo 'Hello'
+                }
             }
-        }
-        stage('AWS Deployment') {
-            steps {
-                echo 'AWS Deployment'
+            stage('AWS Deployment') {
+                steps {
+                    echo 'AWS Deployment1'
+                }
             }
         }
     }
 }
-
