@@ -28,6 +28,24 @@ kubectl remove svc $SVC || true
                 '''
                                          }
             }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             stage('CHeck') {
                 steps {
                     sh ''' podman images | grep $NAME || true'''
@@ -50,4 +68,3 @@ kubectl remove svc $SVC || true
             }
         }
     }
-}
