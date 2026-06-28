@@ -21,12 +21,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'podman build . -t $NAME'
+                sh 'podman build . -t docker.io/mranshu6290/$NAME:$BUILD_NUMBER'
             }
         }
-         stage('Check') {
+        stage('Check') {
             steps {
-                sh 'podman image | grep $NAME'
+                sh 'podman images | grep $NAME'
             }
         }
     }
