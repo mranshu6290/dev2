@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh '''
                 kubectl delete svc $SVC || true
-                kubectl delete deployment $name || true
+                kubectl delete deployment $NAME || true
                 '''
             }
         }
