@@ -61,7 +61,10 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''sleep 5
-                kubectl get svc $SVC -o wide'''
+
+                port=$(kubectl get svc $SVC -o jsonpath="{.spec.ports[0].nodePort}")
+curl -f loclahost:$port || true
+                '''
             }
         }
         stage('AWS Deployment') {
