@@ -46,8 +46,7 @@ pipeline {
         stage('Deployment') {
             steps {
                 sh '''
-                kubectl create deployment $NAME --image = docker.io/mranshu6290/$NAME:$BUILD_NUMBER /
-                --replica=3
+                kubectl create deployment $NAME --image=docker.io/mranshu6290/$NAME:$BUILD_NUMBER --replica=3
                 '''
             }
         }
