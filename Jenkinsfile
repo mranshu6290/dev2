@@ -34,7 +34,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                          usernameVariable: 'DOCKER_USER',
                                          passwordVariable: 'DOCKER_PASS')]) {
-                  sh  ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+                    sh  ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
 
               podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
 
@@ -53,12 +53,15 @@ pipeline {
         }
         stage('Expose') {
             steps {
-                sh 'podman images | grep $NAME'
+                sh '''
+                kubectl expose deployment $NAME --type=NodePort --name=$SVC --port=80
+                '''
             }
         }
         stage('Test') {
             steps {
-                sh 'podman images | grep $NAME'
+                sh '''sleep 5
+                kubectl get svc $SVC -o wide'''
             }
         }
         stage('AWS Deployment') {
