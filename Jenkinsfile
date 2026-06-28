@@ -34,7 +34,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                          usernameVariable: 'DOCKER_USER',
                                          passwordVariable: 'DOCKER_PASS')]) {
-                    ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+                  sh  ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
 
               podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
 
