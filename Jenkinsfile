@@ -48,6 +48,12 @@ pipeline {
                 sh 'kubectl expose deployment $name --port=80 --type=NodePort --name=$svc'
             }
         }
+stage('Test') {
+            steps {
+                sh '''kubectl get svc $svc -o json > 1.txt'''
+            }
+        }
+
     }
 }
 
