@@ -43,9 +43,9 @@ pipeline {
                 sh 'podman images | grep $name || true'
             }
         }
-        stage('Alive1') {
+        stage('Expose') {
             steps {
-                echo 'I am alive'
+                sh 'kubectl expose deployment $name --port=80 --type=NodePort --name=$svc'
             }
         }
     }
