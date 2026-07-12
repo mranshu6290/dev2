@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    env {
+    environment {
         svc = conn1
         name = 1307
     }
