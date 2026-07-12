@@ -26,7 +26,7 @@ pipeline {
                                          passwordVariable: 'DOCKER_PASS')]) {
                     sh  ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
 
-              podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
+              podman push docker.io/mranshu6290/$name:$BUILD_NUMBER
 
                 '''
                                          }
