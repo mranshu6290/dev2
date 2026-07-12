@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        svc = conn1
-        name = 1307
+        svc = "conn1"
+        name = "1307"
     }
 
     stages {
