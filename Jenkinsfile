@@ -1,15 +1,22 @@
 pipeline {
     agent any
+    environement {
+        svc = conn1
+        name = 1307
+    }
 
     stages {
         stage('CLeaanup') {
             steps {
-                echo 'I am alive'
+                sh '''
+                kubeclt remove svc $svc
+                kubectl remove deployment $name
+                '''
             }
         }
         stage('Build') {
             steps {
-                echo 'I am alive'
+                sh 'podman build -t docker.io/mranshu6290/$name:$BUILD_NUMBER'
             }
         }
         stage('Upload') {
