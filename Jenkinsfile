@@ -9,7 +9,7 @@ pipeline {
         stage('CLeaanup') {
             steps {
                 sh '''
-                kubeclt remove svc $svc
+                kubectl remove svc $svc
                 kubectl remove deployment $name
                 '''
             }
