@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-          stage('Build') {
+        stage('Build') {
             steps {
                 sh 'podman images | grep $name'
             }
@@ -36,20 +36,32 @@ pipeline {
                 '''
                                          }
             }
-        stage('Deploy') {
-            steps {
-                echo 'I am alive'
-            }
         }
-        stage('Test') {
-            steps {
-                echo 'I am alive'
+            stage('Deploy') {
+                steps {
+                    sh '''kubectl create deployment $name --replicas=3 \
+                    --image=docker.io/mranshu6290/$name:$BUILD_NUMBER
+                    '''
+                }
             }
+        stage('Expose') {
+                steps {
+                    sh '''
+                    kubectl create svc $svc --type=NodePort --port=80
+                    '''
+                }
         }
-        stage('AWS Infra') {
-            steps {
-                echo 'I am alive'
+
+            stage('Test') {
+                steps {
+                    sh 'kubectl get svc $svc -o wide'
+                }
             }
-        }
+            stage('AWS Infra') {
+                steps {
+                    echo 'I am alive'
+                }
+            }
     }
 }
+
