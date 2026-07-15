@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Remove') {
             steps {
-                sh '''kubectl remove deployment $name || true
-                kubectl remove svc $svc || true
+                sh '''kubectl delete deployment $name || true
+                kubectl delete svc $svc || true
                 '''
             }
         }
