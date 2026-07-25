@@ -19,7 +19,7 @@ pipeline {
         }
         stage('image check') {
             steps {
-                sh 'podman images | grep $name || true'
+                sh 'podman -images | grep $name || true'
             }
         }
         stage('upload') {
