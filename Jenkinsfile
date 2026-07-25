@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('cleanup') {
             steps {
-                sh '''kubectl delete deployment $name || true \
+                sh '''kubectl delete deployment $name || true; \
                 kubectl delete svc $svc || true
                                 '''
             }
@@ -52,9 +52,11 @@ pipeline {
                 '''
             }
         }
-        stage('final test') {
+        stage('get service') {
             steps {
-                echo 'I am testing'
+                sh '''
+                kubectl get svc $name -o json >1.txt
+                '''
             }
         }
         stage('aws') {
