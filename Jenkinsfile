@@ -14,8 +14,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '''podman build -i docker.io/mranshu6290/$name_$BUILD_NUMBER .
-                '''
+                sh '''podman build . -t docker.io/mranshu6290/$name_$BUILD_NUMBER'''
             }
         }
         stage('image check') {
