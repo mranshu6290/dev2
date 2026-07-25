@@ -35,9 +35,21 @@ pipeline {
                                          }
             }
         }
+
+        stage('create') {
+            steps {
+                sh '''kubectl create deployment $name --replicas=3 \
+                --image=docker.io/mranshu6290/$name:$BUILD_NUMBER
+                '''
+            }
+        }
         stage('expose') {
             steps {
-                echo 'I am testing'
+                sh ''' 
+                kubectl expose deplyment $name --type=NodePort \
+                --port=80
+                \
+                '''
             }
         }
         stage('final test') {
