@@ -47,8 +47,8 @@ pipeline {
             steps {
                 sh ''' 
                 kubectl expose deployment $name --type=NodePort \
-                --port=80
-                \
+                --port=80 \
+                --name=$svc
                 '''
             }
         }
