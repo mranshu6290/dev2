@@ -35,7 +35,11 @@ pipeline {
                                          }
             }
         }
-
+        stage('scan') {
+            steps {
+                echo 'testing inage'
+            }
+        }
         stage('create') {
             steps {
                 sh '''kubectl create deployment $name --replicas=3 \
@@ -62,11 +66,19 @@ pipeline {
                 '''
             }
         }
-        stage('aws') {
+
+                stage('aws') {
             steps {
-                echo 'I am testing'
+                sh '''kubectl set image deployment/$name $name=nginx:latest; \
+             if kubectl rollout status deployment/$name --timeout=20s
+then
+    echo "Deployment successful"
+else
+    echo "Deployment failed"
+    kubectl rollout undo deployment/$name
+fi
+                '''
             }
-        }
+                }
     }
 }
-
