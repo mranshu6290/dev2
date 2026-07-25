@@ -55,7 +55,7 @@ pipeline {
         stage('get service') {
             steps {
                 sh '''
-                kubectl get svc $name -o json >1.txt
+                kubectl get svc $svc -o json >1.txt
                 '''
             }
         }
