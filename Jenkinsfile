@@ -45,7 +45,7 @@ pipeline {
         }
         stage('expose') {
             steps {
-                sh ''' 
+                sh '''
                 kubectl expose deployment $name --type=NodePort \
                 --port=80 \
                 --name=$svc
@@ -55,7 +55,10 @@ pipeline {
         stage('get service') {
             steps {
                 sh '''
-                kubectl get svc $svc -o json >1.txt
+
+              port=$(kubectl get svc $svc -o jsonpath='{.spec.ports[0].nodePort}')
+
+            curl -f localhost:$port || true
                 '''
             }
         }

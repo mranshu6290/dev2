@@ -1,1 +1,42 @@
-AXD
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+        "creationTimestamp": "2026-07-25T04:33:40Z",
+        "labels": {
+            "app": "2607"
+        },
+        "name": "conn1",
+        "namespace": "default",
+        "resourceVersion": "247079",
+        "uid": "e03841cc-3c95-41bd-874c-626586406d72"
+    },
+    "spec": {
+        "clusterIP": "10.43.161.214",
+        "clusterIPs": [
+            "10.43.161.214"
+        ],
+        "externalTrafficPolicy": "Cluster",
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+            "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+            {
+                "nodePort": 31611,
+                "port": 80,
+                "protocol": "TCP",
+                "targetPort": 80
+            }
+        ],
+        "selector": {
+            "app": "2607"
+        },
+        "sessionAffinity": "None",
+        "type": "NodePort"
+    },
+    "status": {
+        "loadBalancer": {}
+    }
+}
