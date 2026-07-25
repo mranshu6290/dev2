@@ -69,7 +69,7 @@ pipeline {
 
                 stage('aws') {
             steps {
-                sh '''kubectl set image deployment/$name $name=nginx:latest; \
+                sh '''kubectl set image deployment/$name $name=ngin:latest; \
              if kubectl rollout status deployment/$name --timeout=20s
 then
     echo "Deployment successful"
