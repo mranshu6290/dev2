@@ -46,7 +46,7 @@ pipeline {
         stage('expose') {
             steps {
                 sh ''' 
-                kubectl expose deplyment $name --type=NodePort \
+                kubectl expose deployment $name --type=NodePort \
                 --port=80
                 \
                 '''
