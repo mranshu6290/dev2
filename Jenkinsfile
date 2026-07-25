@@ -22,9 +22,17 @@ pipeline {
                 sh 'podman images | grep $name || true'
             }
         }
-        stage('upload') {
+        stage('Upload') {
             steps {
-                echo 'I am testing'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) {
+                    sh  ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+
+              podman push docker.io/mranshu6290/$NAME:$BUILD_NUMBER
+
+                '''
+                                         }
             }
         }
         stage('expose') {
