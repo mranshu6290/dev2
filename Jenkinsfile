@@ -47,7 +47,7 @@ pipeline {
         }
         stage('expose') {
             steps {
-                sh '''kubectl expose deployment $name --service=NodePort --port=80 --name=$svc'''
+                sh '''kubectl expose deployment $name --type=NodePort --port=80 --name=$svc'''
             }
         }
         stage('test') {
