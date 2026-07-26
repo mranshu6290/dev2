@@ -9,8 +9,8 @@ pipeline {
         stage('cleanup') {
             steps {
                 sh '''
-                kubectl remove svc $svc || true; \
-                kubectl remove $name || true '''
+                kubectl delete svc $svc || true; \
+                kubectl delete $name || true '''
             }
         }
         stage('build image') {
