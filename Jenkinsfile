@@ -54,6 +54,7 @@ pipeline {
             steps {
                 sh '''
                 port=$(kubectl get svc $svc -o jsonpath={.spec.ports[0].nodePort}); \
+                sleep 10
                 curl -f localhost:$port 
 
                 kubectl set image deployment:$name $name:nginx:latest
