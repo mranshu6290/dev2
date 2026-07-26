@@ -16,7 +16,7 @@ pipeline {
         stage('build image') {
             steps {
                 sh '''
-                podman build . -t docker.io/mranshu6290/$name:BUILD_NUMBER
+                podman build . -t docker.io/mranshu6290/$name:$BUILD_NUMBER
                 '''
             }
         }
