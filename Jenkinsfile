@@ -61,6 +61,8 @@ pipeline {
                  if kubectl rollout status deployment/$name --timeout=20s
                    then
     echo "Deployment successful"
+    sleep 5
+                curl -f localhost:$port
     else
     echo "Deployment failed"
     kubectl rollout undo deployment/$name
