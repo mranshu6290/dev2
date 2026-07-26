@@ -52,7 +52,9 @@ pipeline {
         }
         stage('test') {
             steps {
-                echo 'I am alive'
+                sh '''
+                port=$(kubectl get svc $svc -o jsonpath={.spec.ports[0].nodePort}); \
+                curl -f localhost:$port'''
             }
         }
         stage('aws') {
