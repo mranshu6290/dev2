@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh '''
                 kubectl delete svc $svc || true; \
-                kubectl delete $name || true '''
+                kubectl delete deployment $name || true '''
             }
         }
         stage('build image') {
