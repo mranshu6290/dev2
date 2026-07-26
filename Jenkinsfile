@@ -54,7 +54,16 @@ pipeline {
             steps {
                 sh '''
                 port=$(kubectl get svc $svc -o jsonpath={.spec.ports[0].nodePort}); \
-                curl -f localhost:$port --timeout 10'''
+                curl -f localhost:$port --timeout 10
+
+                kubectl set image deployment:$name $name:nginx:latest
+                 if kubectl rollout status deployment/$name --timeout=20s
+                   then
+    echo "Deployment successful
+    else
+    echo "Deployment failed"
+    kubectl rollout undo deployment/$name
+fi '''
             }
         }
         stage('aws') {
