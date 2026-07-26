@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sh '''
                 port=$(kubectl get svc $svc -o jsonpath={.spec.ports[0].nodePort}); \
-                curl -f localhost:$port'''
+                curl -f localhost:$port --max-time 10'''
             }
         }
         stage('aws') {
