@@ -57,7 +57,7 @@ pipeline {
                 sleep 10
                 curl -f localhost:$port 
 
-                kubectl set image deployment:$name $name:nginx:latest
+                kubectl set image deployment/$name $name:nginx:latest
                  if kubectl rollout status deployment/$name --timeout=20s
                    then
     echo "Deployment successful
