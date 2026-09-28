@@ -12,7 +12,7 @@ pipeline {
                 echo 'I am alive'
             }
         }
-        stage('Alive2') {
+        stage('vada') {
             steps {
                 echo 'I am alive'
             }
