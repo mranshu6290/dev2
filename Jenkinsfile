@@ -20,7 +20,7 @@ pipeline {
 podman build . -t docker.io/mranshu6290/$name:$BUILD_NUMBER
 '''            }
         }
-       stage('Upload') {
+        stage('Upload') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                          usernameVariable: 'DOCKER_USER',
@@ -43,7 +43,7 @@ podman build . -t docker.io/mranshu6290/$name:$BUILD_NUMBER
         }
         stage('expose') {
             steps {
-                '''
+                sh '''
                   kubectl expose deployment $name --type=NodePort \
                 --port=80 \
                 --name=$svc
