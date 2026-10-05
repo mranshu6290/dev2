@@ -1,38 +1,46 @@
 pipeline {
     agent any
 
+    environment {
+        name = '0510'
+        svc = 'conn2'
+    }
+
     stages {
-        stage('Tiger') {
+        stage('cleanup') {
+            steps {
+                sh '''
+                kubectl delete svc $svc || true; \
+                kubectl delete deployment $name || true '''
+            }
+        }
+        stage('build_image') {
+            steps {
+                sh '''
+podman build . -t docker.io/mranshu6290/$name:$BUILD_NUMBER
+'''            }
+        }
+        stage('uokoad') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Zinda') {
+        stage('expose') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Hai') {
+        stage('test') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Alive3') {
+        stage('changes') {
             steps {
                 echo 'I am alive'
             }
         }
-        stage('Alive4') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive5') {
-            steps {
-                echo 'I am alive'
-            }
-        }
-        stage('Alive6') {
+        stage('terraform') {
             steps {
                 echo 'I am alive'
             }
