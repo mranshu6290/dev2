@@ -20,9 +20,17 @@ pipeline {
 podman build . -t docker.io/mranshu6290/$name:$BUILD_NUMBER
 '''            }
         }
-        stage('uokoad') {
+       stage('Upload') {
             steps {
-                echo 'I am alive'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                                         usernameVariable: 'DOCKER_USER',
+                                         passwordVariable: 'DOCKER_PASS')]) {
+                    sh  ''' echo $DOCKER_PASS | podman login docker.io -u $DOCKER_USER --password-stdin
+
+              podman push docker.io/mranshu6290/$name:$BUILD_NUMBER
+
+                '''
+                                         }
             }
         }
         stage('expose') {
