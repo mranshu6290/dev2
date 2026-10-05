@@ -33,19 +33,31 @@ podman build . -t docker.io/mranshu6290/$name:$BUILD_NUMBER
                                          }
             }
         }
+        stage('run_docker') {
+            steps {
+                sh '''
+                kubectl create deployment $name --replicas=3 \
+                --image=docker.io/mranshu6290/$name:$BUILD_NUMBER
+                '''
+            }
+        }
         stage('expose') {
             steps {
-                echo 'I am alive'
+                '''
+                  kubectl expose deployment $name --type=NodePort \
+                --port=80 \
+                --name=$svc
+                '''
             }
         }
         stage('test') {
             steps {
-                echo 'I am alive'
-            }
-        }
-        stage('changes') {
-            steps {
-                echo 'I am alive'
+                sh '''
+
+              port=$(kubectl get svc $svc -o jsonpath='{.spec.ports[0].nodePort}')
+
+            curl -f localhost:$port || true
+                '''
             }
         }
         stage('terraform') {
